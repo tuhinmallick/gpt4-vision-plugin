@@ -33,9 +33,8 @@ def query_gpt4v(ctx):
     query_text = ctx.params.get("query_text", None)
     max_tokens = ctx.params.get("max_tokens", 300)
 
-    messages_content = []
     text_message = {"type": "text", "text": query_text}
-    messages_content.append(text_message)
+    messages_content = [text_message]
     for sample_id in sample_ids:
         filepath = dataset[sample_id].filepath
         base64_image = encode_image(filepath)
@@ -117,7 +116,7 @@ class QueryGPT4Vision(foo.Operator):
             inputs.str(
                 "no_sample_warning",
                 view=types.Warning(
-                    label=f"You must select a sample to use this operator"
+                    label="You must select a sample to use this operator"
                 ),
             )
         else:
